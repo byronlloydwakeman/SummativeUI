@@ -9,10 +9,10 @@ import java.util.Map;
 
 public class DatabaseEndpoint
 {
-    private Connection connection;
+    private final Connection connection;
     private String dbschema;
     private String dbtableusers;
-    private Map<String, String> env = Env.readEnv();
+    private final Map<String, String> env = Env.readEnv();
 
     public DatabaseEndpoint() throws ClassNotFoundException, SQLException {
         String state = System.getenv("ENVIRONMENT");
@@ -21,13 +21,16 @@ public class DatabaseEndpoint
         dbschema = env.get("proddbschema");
         dbtableusers = env.get("proddbtableusers");
         // Connect the right db depending on whether its prod being run or a test
-        switch (state){
-            case "production":
+
+        switch (state) {
+            case "production" -> {
                 dbschema = env.get("proddbschema");
                 dbtableusers = env.get("proddbtableusers");
-            case "test":
+            }
+            case "test" -> {
                 dbschema = env.get("testdbschema");
                 dbtableusers = env.get("testdbtableusers");
+            }
         }
 
         this.connection = InitDBConnection();
@@ -35,10 +38,8 @@ public class DatabaseEndpoint
 
     private Connection InitDBConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection(
+        return DriverManager.getConnection(
     env.get("dburl") + dbschema, env.get("dbusername"), env.get("dbpassword"));
-
-        return con;
     }
 
     public LoginModel Login(String username, String password){
@@ -75,7 +76,7 @@ public class DatabaseEndpoint
             ResultSet rs = stmt.executeQuery("SELECT * FROM " + dbtableusers + " WHERE username = \"" + username + "\"");
             while (rs.next()) {
                 String dbpassword = rs.getString(2);
-                Boolean dbadmin = Boolean.valueOf(String.valueOf(rs.getInt(3)));
+                boolean dbadmin = Boolean.parseBoolean(String.valueOf(rs.getInt(3)));
                 return new DBLoginModel(dbpassword, dbadmin);
             }
             connection.close(); // Close connection outside of the loop
