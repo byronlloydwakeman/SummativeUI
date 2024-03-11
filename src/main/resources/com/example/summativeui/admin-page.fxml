@@ -20,5 +20,5 @@
     <PasswordField fx:id="password"/>
     <Label text="Admin"/>
     <CheckBox fx:id="isAdmin"/>
-    <Button text="Create Account" onAction="#CreateAccount"/>
+    <Button fx:id="createAccount" text="Create Account" onAction="#CreateAccount"/>
 </VBox>

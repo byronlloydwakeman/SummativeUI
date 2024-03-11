@@ -10,16 +10,33 @@ import java.util.Map;
 public class DatabaseEndpoint
 {
     private Connection connection;
+    private String dbschema;
+    private String dbtableusers;
+    private Map<String, String> env = Env.readEnv();
 
     public DatabaseEndpoint() throws ClassNotFoundException, SQLException {
+        String state = System.getenv("ENVIRONMENT");
+
+        // Set prob to default
+        dbschema = env.get("proddbschema");
+        dbtableusers = env.get("proddbtableusers");
+        // Connect the right db depending on whether its prod being run or a test
+        switch (state){
+            case "production":
+                dbschema = env.get("proddbschema");
+                dbtableusers = env.get("proddbtableusers");
+            case "test":
+                dbschema = env.get("testdbschema");
+                dbtableusers = env.get("testdbtableusers");
+        }
+
         this.connection = InitDBConnection();
     }
 
     private Connection InitDBConnection() throws ClassNotFoundException, SQLException {
-        Map<String, String> env = Env.readEnv();
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(
-    env.get("dburl") + "summativeusers", env.get("dbusername"), env.get("dbpassword"));
+    env.get("dburl") + dbschema, env.get("dbusername"), env.get("dbpassword"));
 
         return con;
     }
@@ -55,7 +72,7 @@ public class DatabaseEndpoint
         try
         {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = \"" + username + "\"");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + dbtableusers + " WHERE username = \"" + username + "\"");
             while (rs.next()) {
                 String dbpassword = rs.getString(2);
                 Boolean dbadmin = Boolean.valueOf(String.valueOf(rs.getInt(3)));
@@ -87,7 +104,7 @@ public class DatabaseEndpoint
         try
         {
             Statement stmt = connection.createStatement();
-            String query = "INSERT INTO users (username, password, admin) " +
+            String query = "INSERT INTO " + dbtableusers + " (username, password, admin) " +
                     "VALUES ('" + username + "', '" + password + "', " + isAdmin + ")";
 
             int inserted = stmt.executeUpdate(query);
