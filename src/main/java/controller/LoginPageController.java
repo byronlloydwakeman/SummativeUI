@@ -33,7 +33,7 @@ public class LoginPageController {
                 // We don't want the page to navigate if we're testing
                 if(!System.getenv("ENVIRONMENT").equals("test"))
                 {
-                    HelloApplication.changeScene("inventory-page.fxml", 320, 400);
+                    HelloApplication.changeScene("inventory-page.fxml", 1920, 1080);
                 }
             }
             else

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+
+<!-- Page -->
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:controller="controller.InventoryPageController"
+        alignment="TOP_LEFT" stylesheets="@css/InventoryPage.css"
+        xmlns="http://javafx.com/javafx/17" style="fx-background-color: -mfx-purple;">
+
+    <!-- Side Menu Bar -->
+    <VBox minHeight="Infinity" minWidth="150.0" styleClass="sideMenu-container">
+        <MFXButton minHeight="27.0" minWidth="150.0" styleClass="outline-button">
+            Dashboard
+        </MFXButton>
+        <MFXButton minHeight="27.0" minWidth="100.0" styleClass="outline-button">
+            Inventory
+        </MFXButton>
+        <MFXButton minHeight="27.0" minWidth="100.0" styleClass="outline-button">
+            About
+        </MFXButton>
+    </VBox>
+    <VBox>
+
+    </VBox>
+</HBox>
