@@ -30,7 +30,11 @@ public class LoginPageController {
                 //Set instance to be re-used
                 UserModel.setInstance(usernameStr, passwordStr, response.getIsAdmin());
                 Notifications.ShowInfo("", "Login Successful", "");
-                HelloApplication.changeScene("admin-page.fxml", 320, 400);
+                // We don't want the page to navigate if we're testing
+                if(!System.getenv("ENVIRONMENT").equals("test"))
+                {
+                    HelloApplication.changeScene("inventory-page.fxml", 320, 400);
+                }
             }
             else
             {

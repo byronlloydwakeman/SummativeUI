@@ -2,9 +2,9 @@ package com.example.summativeui.controller;
 
 import com.example.summativeui.Env;
 import com.example.summativeui.HelloApplication;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
@@ -20,8 +20,6 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
