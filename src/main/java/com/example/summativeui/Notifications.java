@@ -40,5 +40,4 @@ public class Notifications {
         alert.getDialogPane().setId(lang.getString("dialog.warning.id"));
         ShowNotification(title, header, content, alert);
     }
-
 }
