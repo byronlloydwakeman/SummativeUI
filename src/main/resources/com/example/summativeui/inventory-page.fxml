@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Button?>
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controller.InventoryPageController"
-      alignment="TOP_LEFT" stylesheets="@css/InventoryPage.css"
-      xmlns="http://javafx.com/javafx/17" style="fx-background-color: -mfx-purple;">
+<VBox fx:id="inventoryPage" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.InventoryPageController"
+      alignment="TOP_LEFT" stylesheets="@css/pages/inventory-page.css"
+      xmlns="http://javafx.com/javafx/17">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -38,7 +38,21 @@
                 <ListView fx:id="inventoryList" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" onMouseClicked="#handleInventoryItemClick"/>
                 <VBox fx:id="groceryViewer" HBox.hgrow="ALWAYS" alignment="CENTER" VBox.vgrow="ALWAYS">
                     <children>
-                        <Label text="Select an item to see it here"/>
+                        <Label fx:id="introLabel" text="Select an item to see it here" styleClass="inventory-quantity"/>
+                        <HBox>
+                            <children>
+                                <VBox fx:id="leftSide" HBox.hgrow="ALWAYS">
+                                    <children>
+
+                                    </children>
+                                </VBox>
+                                <VBox fx:id="rightSide" HBox.hgrow="ALWAYS" alignment="CENTER">
+                                    <children>
+
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
                     </children>
                 </VBox>
             </children>

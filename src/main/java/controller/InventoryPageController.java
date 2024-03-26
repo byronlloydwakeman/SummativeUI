@@ -9,6 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -16,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
+import javafx.scene.text.TextAlignment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,15 +29,19 @@ import java.util.ArrayList;
 public class InventoryPageController {
     @FXML
     private ListView inventoryList = new ListView();
-
     @FXML
     private VBox groceryViewer;
+    @FXML
+    private Label introLabel;
+    @FXML
+    private VBox leftSide;
+    @FXML
+    private VBox rightSide;
 
     public void fetchInventoryItems()
     {
         try {
             DatabaseEndpoint endpoint = new DatabaseEndpoint();
-//            inventoryList.setItems(FXCollections.observableArrayList(endpoint.ReadAllGroceries().getGroceryModels()));
             inventoryList.setItems(FXCollections.observableArrayList(endpoint.ReadAllInventory().getInventoryModels()));
         } catch (ClassNotFoundException e) {
             Notifications.ShowError("Error", "Class not found", e.getMessage());
@@ -56,7 +64,18 @@ public class InventoryPageController {
     {
         if (content != null && !content.equals("0"))
         {
-            parentContainer.getChildren().add(new Label(content));
+            Label temp = new Label(content);
+            parentContainer.getChildren().add(temp);
+        }
+    }
+
+    private void renderSubtitleLabel(VBox parentContainer, String content)
+    {
+        if (content != null && !content.equals("0"))
+        {
+            Label temp = new Label(content);
+            temp.getStyleClass().add("grocery-subtitle");
+            parentContainer.getChildren().add(temp);
         }
     }
 
@@ -72,46 +91,58 @@ public class InventoryPageController {
 
             DBGroceryModel dbGroceryModel = groceryModel.getGroceryModel();
 
-            groceryViewer.getChildren().clear();
+            // Clear children
+            leftSide.getChildren().clear();
+            rightSide.getChildren().clear();
 
-            //Add the grocery name
-            renderLabel(groceryViewer, dbGroceryModel.getGrocery());
-
-            //Add HBox with VBoxes
-            HBox hBox = new HBox();
-            groceryViewer.getChildren().add(hBox);
-
-            //Add VBoxes to HBox
-            VBox leftSide = new VBox();
-            VBox rightSide = new VBox();
-
-            leftSide.getStyleClass().add("hbox-hgrow-always");
-            rightSide.getStyleClass().add("hbox-hgrow-always");
-
-            groceryViewer.getChildren().add(leftSide);
-            groceryViewer.getChildren().add(rightSide);
+            //Set the grocery name
+            introLabel.setText(dbGroceryModel.getGrocery());
+            introLabel.getStyleClass().add("grocery-title");
 
             // Right side
+            rightSide.setPadding(new Insets(10.0));
             rightSide.getChildren().add(imageView);
 
+            renderSubtitleLabel(rightSide,"Inventory Level");
+            HBox inventoryRow = new HBox();
+            rightSide.getChildren().add(inventoryRow);
+            inventoryRow.setAlignment(Pos.TOP_CENTER);
+
+            Button minus = new Button();
+            minus.setText("➖");
+            minus.getStyleClass().add("inventory-button");
+            Label inventoryQuantity = new Label();
+
+            inventoryQuantity.setText(String.valueOf(dbInventoryModel.getQuantity()));
+            inventoryQuantity.getStyleClass().add("inventory-quantity");
+
+            Button plus = new Button();
+            plus.setText("➕");
+            plus.getStyleClass().add("inventory-button");
+            inventoryRow.getChildren().addAll(minus, inventoryQuantity, plus);
+
+            renderSubtitleLabel(rightSide, "Nutritional Content");
+
+
             // Left side
-            renderLabel(leftSide, String.valueOf(dbGroceryModel.getPrice() / 100), "£%s");
+            leftSide.setPadding(new Insets(20.0));
+            renderSubtitleLabel(leftSide, String.format("£%s", dbGroceryModel.getPrice() / 100));
 
             // Description
-            renderLabel(leftSide, "Description");
+            renderSubtitleLabel(leftSide, "Description");
             renderLabel(leftSide, String.valueOf(dbGroceryModel.getWeight()), "Weight - %s");
             renderLabel(leftSide, String.valueOf(dbGroceryModel.getSellByDate()), "Sell By Date - %s");
             renderLabel(leftSide, dbGroceryModel.getCountryOrigin(), "Country Origin - %s");
             renderLabel(leftSide, dbGroceryModel.getOrigin(), "Origin - %s");
             renderLabel(leftSide, dbGroceryModel.isFreezable() ? "Freezable" : null);
 
-            renderLabel(leftSide, "Storage");
+            renderSubtitleLabel(leftSide, "Storage");
             renderLabel(leftSide, dbGroceryModel.getStorage());
 
-            renderLabel(leftSide, "Category");
+            renderSubtitleLabel(leftSide, "Category");
             renderLabel(leftSide, dbGroceryModel.getFoodCategory());
 
-            renderLabel(leftSide, "Grade");
+            renderSubtitleLabel(leftSide, "Grade");
             renderLabel(leftSide, dbGroceryModel.getGrade());
 
         } catch (SQLException e) {
