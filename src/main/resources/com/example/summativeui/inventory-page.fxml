@@ -26,7 +26,7 @@
         </MenuBar>
         <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="640.0">
             <children>
-                <Button alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="39.0" text="Logout" onMouseClicked="#fetchInventoryItems">
+                <Button alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="60.0" text="Logout">
                     <HBox.margin>
                         <Insets right="10.0" />
                     </HBox.margin>

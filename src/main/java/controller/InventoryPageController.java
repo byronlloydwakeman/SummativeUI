@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -23,10 +24,12 @@ import javafx.scene.text.TextAlignment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class InventoryPageController {
+public class InventoryPageController implements Initializable {
     @FXML
     private ListView inventoryList = new ListView();
     @FXML
@@ -38,8 +41,8 @@ public class InventoryPageController {
     @FXML
     private VBox rightSide;
 
-    public void fetchInventoryItems()
-    {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             DatabaseEndpoint endpoint = new DatabaseEndpoint();
             inventoryList.setItems(FXCollections.observableArrayList(endpoint.ReadAllInventory().getInventoryModels()));
@@ -151,4 +154,6 @@ public class InventoryPageController {
             e.printStackTrace();
         }
     }
+
+
 }
