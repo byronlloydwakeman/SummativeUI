@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <VBox fx:id="inventoryPage" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.InventoryPageController"
       alignment="TOP_LEFT" stylesheets="@css/pages/inventory-page.css"
       xmlns="http://javafx.com/javafx/17">
@@ -35,7 +36,10 @@
         </HBox>
         <HBox prefWidth="640.0" fillHeight="true">
             <children>
-                <ListView fx:id="inventoryList" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" onMouseClicked="#handleInventoryItemClick"/>
+                <VBox HBox.hgrow="ALWAYS" alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <TextField fx:id="inventorySearch" alignment="CENTER_LEFT"/>
+                    <ListView fx:id="inventoryList" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" onMouseClicked="#handleInventoryItemClick"/>
+                </VBox>
                 <VBox fx:id="groceryViewer" HBox.hgrow="ALWAYS" alignment="CENTER" VBox.vgrow="ALWAYS">
                     <children>
                         <Label fx:id="introLabel" text="Select an item to see it here" styleClass="inventory-quantity"/>

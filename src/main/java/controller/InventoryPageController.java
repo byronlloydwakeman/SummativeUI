@@ -15,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -28,24 +29,43 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class InventoryPageController implements Initializable {
     @FXML
     private ListView inventoryList = new ListView();
-    @FXML
-    private VBox groceryViewer;
     @FXML
     private Label introLabel;
     @FXML
     private VBox leftSide;
     @FXML
     private VBox rightSide;
+    @FXML
+    private TextField inventorySearch;
+
+    private ArrayList<DBInventoryModel> inventory;
+    private ArrayList<DBInventoryModel> inventoryTemp;
+
+    private void handleTextChange(String newText) {
+        inventory = (ArrayList<DBInventoryModel>) inventoryTemp.stream()
+                .filter(s -> s.getGroceryId().toLowerCase().contains(newText.toLowerCase()))
+                .collect(Collectors.toList());
+        inventoryList.setItems(FXCollections.observableArrayList(inventory));
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             DatabaseEndpoint endpoint = new DatabaseEndpoint();
-            inventoryList.setItems(FXCollections.observableArrayList(endpoint.ReadAllInventory().getInventoryModels()));
+            inventory = endpoint.ReadAllInventory().getInventoryModels();
+            inventoryTemp = new ArrayList<>(inventory);
+            inventoryList.setItems(FXCollections.observableArrayList(inventory));
+
+            //Bind search bar text
+            inventorySearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                // Call your function here, passing the new value of the TextField
+                handleTextChange(newValue);
+            });
         } catch (ClassNotFoundException e) {
             Notifications.ShowError("Error", "Class not found", e.getMessage());
         } catch (SQLException e) {
