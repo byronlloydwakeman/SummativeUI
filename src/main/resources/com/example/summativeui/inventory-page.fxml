@@ -1,0 +1,47 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controller.InventoryPageController"
+      alignment="TOP_LEFT" stylesheets="@css/InventoryPage.css"
+      xmlns="http://javafx.com/javafx/17" style="fx-background-color: -mfx-purple;">
+    <children>
+        <MenuBar VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="640.0">
+            <children>
+                <Button alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="39.0" text="Logout" onMouseClicked="#fetchInventoryItems">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+        <HBox prefWidth="640.0" fillHeight="true">
+            <children>
+                <ListView fx:id="inventoryList" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" onMouseClicked="#handleInventoryItemClick"/>
+                <VBox fx:id="groceryViewer" HBox.hgrow="ALWAYS" alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Select an item to see it here"/>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>
