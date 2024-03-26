@@ -2,26 +2,33 @@ package com.example.summativeui.model;
 
 import java.sql.Blob;
 import java.sql.Date;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "DBGroceryModel")
 
 public class DBGroceryModel {
-    private String grocery;
-    private String grade;
-    private Date sellByDate;
-    private int weight;
-    private String origin;
-    private boolean freezable;
-    private String foodCategory;
-    private int volume;
-    private  int price;
-    private String brand;
-    private String allergies;
-    private String storage;
-    private String countryOrigin;
-    private String description;
-    private int alcoholicPercentage;
-    private int quantity;
-    private int nutritionalContent;
-    private String image;
+    @Id @Column private String grocery;
+    @Column private String grade;
+    @Column private Date sellByDate;
+    @Column private int weight;
+    @Column private String origin;
+    @Column private boolean freezable;
+    @Column private String foodCategory;
+    @Column private int volume;
+    @Column private int price;
+    @Column private String brand;
+    @Column private String allergies;
+    @Column private String storage;
+    @Column private String countryOrigin;
+    @Column private String description;
+    @Column private int alcoholicPercentage;
+    @Column private int quantity;
+    @Column private int nutritionalContent;
+    @Column private String image;
 
     public DBGroceryModel(String grocery, String grade, Date sellByDate, int weight, String origin, boolean freezable, String foodCategory, int volume, int price, String brand, String allergies, String storage, String countryOrigin, String description, int alcoholicPercentage, int quantity, int nutritionalContent, String image) {
         this.grocery = grocery;

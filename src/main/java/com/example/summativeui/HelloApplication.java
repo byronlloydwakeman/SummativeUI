@@ -1,6 +1,7 @@
 package com.example.summativeui;
 
 import com.example.summativeui.database.DatabaseEndpoint;
+import com.example.summativeui.database.HibernateDBEndpoint;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,6 +27,7 @@ public class HelloApplication extends Application {
         //Initialize DB connection
         try {
             new DatabaseEndpoint();
+            new HibernateDBEndpoint();
         } catch (ClassNotFoundException e) {
             Notifications.ShowError("Error", "ClassNotFound Error", e.getMessage());
         } catch (SQLException e) {

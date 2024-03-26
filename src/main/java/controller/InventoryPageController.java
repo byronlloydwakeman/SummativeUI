@@ -2,6 +2,7 @@ package controller;
 
 import com.example.summativeui.Notifications;
 import com.example.summativeui.database.DatabaseEndpoint;
+import com.example.summativeui.database.HibernateDBEndpoint;
 import com.example.summativeui.model.DBGroceryModel;
 import com.example.summativeui.model.DBInventoryModel;
 import com.example.summativeui.model.GroceryModel;
@@ -21,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryPageController {
     @FXML
@@ -31,17 +33,19 @@ public class InventoryPageController {
 
     public void fetchInventoryItems()
     {
-        try {
-            DatabaseEndpoint endpoint = new DatabaseEndpoint();
-//            inventoryList.setItems(FXCollections.observableArrayList(endpoint.ReadAllGroceries().getGroceryModels()));
-            inventoryList.setItems(FXCollections.observableArrayList(endpoint.ReadAllInventory().getInventoryModels()));
-        } catch (ClassNotFoundException e) {
-            Notifications.ShowError("Error", "Class not found", e.getMessage());
-        } catch (SQLException e) {
-            Notifications.ShowError("Error", "SQL Error", e.getMessage());
-        } catch (Exception e) {
-            Notifications.ShowError("", "Error", e.getMessage());
-        }
+        List<?> groceries = HibernateDBEndpoint.getGrocery("Coca-Cola Classic 500ml");
+        System.out.println(groceries);
+//        try {
+//            DatabaseEndpoint endpoint = new DatabaseEndpoint();
+////            inventoryList.setItems(FXCollections.observableArrayList(endpoint.ReadAllGroceries().getGroceryModels()));
+//            inventoryList.setItems(FXCollections.observableArrayList(endpoint.ReadAllInventory().getInventoryModels()));
+//        } catch (ClassNotFoundException e) {
+//            Notifications.ShowError("Error", "Class not found", e.getMessage());
+//        } catch (SQLException e) {
+//            Notifications.ShowError("Error", "SQL Error", e.getMessage());
+//        } catch (Exception e) {
+//            Notifications.ShowError("", "Error", e.getMessage());
+//        }
     }
 
     private void renderLabel(VBox parentContainer, String content, String textFormatting)

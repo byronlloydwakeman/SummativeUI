@@ -1,0 +1,26 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name = "com.example.summativeui.model.DBGroceryModel" table = "employee">
+        <id name = "grocery" column = "grocery" type = "string" />
+        <property name = "grade" column = "grade" type = "string"/>
+        <property name = "sellByDate" column = "sellByDate" type = "date"/>
+        <property name = "weight" column = "weight" type = "int"/>
+        <property name = "origin" column = "origin" type = "string"/>
+        <property name = "freezable" column = "freezable" type = "boolean"/>
+        <property name = "foodCategory" column = "foodCategory" type = "string"/>
+        <property name = "volume" column = "volume" type = "int"/>
+        <property name = "price" column = "price" type = "int"/>
+        <property name = "brand" column = "brand" type = "string"/>
+        <property name = "allergies" column = "allergies" type = "string"/>
+        <property name = "storage" column = "storage" type = "string"/>
+        <property name = "countryOrigin" column = "countryOrigin" type = "string"/>
+        <property name = "description" column = "description" type = "string"/>
+        <property name = "alcoholicPercentage" column = "alcoholicPercentage" type = "int"/>
+        <property name = "quantity" column = "quantity" type = "int"/>
+        <property name = "nutritionalContent" column = "nutritionalContent" type = "int"/>
+        <property name = "image" column = "image" type = "string"/>
+    </class>
+</hibernate-mapping>

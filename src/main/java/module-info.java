@@ -10,6 +10,9 @@ module com.example.summativeui {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.sql;
+    requires jakarta.persistence;
+    requires org.hibernate.orm.core;
+    requires java.naming;
 
     opens com.example.summativeui to javafx.fxml;
     exports com.example.summativeui;
