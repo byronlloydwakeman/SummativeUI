@@ -9,6 +9,9 @@ import javafx.scene.control.TextField;
 
 import javafx.fxml.FXML;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 
 public class LoginPageController {
     @FXML
@@ -20,11 +23,11 @@ public class LoginPageController {
     @FXML
     protected void Login() {
         // Call the function to actually login
+
         try {
-            DatabaseEndpoint endpoint = new DatabaseEndpoint();
             String usernameStr = username.getText();
             String passwordStr = password.getText();
-            LoginModel response = endpoint.Login(usernameStr, passwordStr);
+            LoginModel response = DatabaseEndpoint.Login(usernameStr, passwordStr);
             if(response.getSuccessful())
             {
                 //Set instance to be re-used
@@ -40,9 +43,13 @@ public class LoginPageController {
             {
                 Notifications.ShowWarning("", "Login Error", response.getResponse());
             }
+        } catch (SQLException e) {
+            Notifications.ShowError("Error", "SQL Error", e.getMessage());
+        } catch(IOException e){
+            Notifications.ShowError("Error", "IOException", e.getMessage());
         }
-        catch(Exception e){
-            Notifications.ShowError("", "Login Error", e.getMessage());
-        }
+
+
+
     }
 }
